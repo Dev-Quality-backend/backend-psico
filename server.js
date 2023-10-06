@@ -591,7 +591,7 @@ app.post('/webhook/zoho', async (req, res) => {
 
   try {
     // Primeiro, buscar o nome e instituicaoNome com base no CPF na tabela cadastro_clientes
-    const [clientes] = await pool.execute('SELECT nome, instituicaoNome FROM cadastro_clientes WHERE cpf = ?', [cpf]);
+    const [clientes] = await pool.execute('SELECT NomeCompleto, instituicaoNome FROM cadastro_clientes WHERE cpf = ?', [cpf]);
     
     if (clientes.length === 0) {
       return res.status(404).send('Cliente não encontrado');
@@ -600,7 +600,7 @@ app.post('/webhook/zoho', async (req, res) => {
     const { nome, instituicaoNome } = clientes[0];
 
     // Agora, atualizar a tabela avaliacoes_realizadas
-    const [rows] = await pool.execute('INSERT INTO avaliacoes_realizadas (cpf, instituicaoNome, nome, avaliacao_realizada) VALUES (?, ?, ?, 1)', [cpf, instituicaoNome, nome]);
+    const [rows] = await pool.execute('INSERT INTO avaliacoes_realizadas (cpf, instituicaoNome, NomeCompleto, avaliacao_realizada) VALUES (?, ?, ?, 1)', [cpf, instituicaoNome, NomeCompleto]);
 
 
     if (rows.affectedRows > 0) {
