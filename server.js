@@ -175,7 +175,7 @@ app.post('/login', async (req, res) => {
       return res.status(401).json({ success: false, message: 'Wrong password' });
     }
 
-    const token = jwt.sign({ id: user.id, role: user.acesso, instituicaoNome: user.instituicaoNome }, jwtSecret, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id, username: user.NomeCompleto, role: user.acesso, instituicaoNome: user.instituicaoNome }, jwtSecret, { expiresIn: '1h' });
 
     if (!token) {
       console.log('Falha ao criar o token JWT');
