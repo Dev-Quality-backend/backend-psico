@@ -27,22 +27,22 @@ app.use(cors({
 app.use(express.json());
 
 app.get('/checkAvaliacao', async (req, res) => {
-  const { cpf, instituicaoNome } = req.query;
+  const { cpf, instituicaoNome, nome } = req.query;
 
-  console.log("Rota CheckAvaliacao acionada. CPF:", cpf, ", Instituição:", instituicaoNome);  // Log para debug
+  console.log("Rota CheckAvaliacao acionada. CPF:", cpf, ", Instituição:", instituicaoNome, ", nome:", nome);  // Log para debug
   
   try {
     const [rows] = await pool.execute(
-      'SELECT avaliacao_realizada FROM avaliacoes_realizadas WHERE cpf = ? AND instituicaoNome = ?',
-      [cpf, instituicaoNome]
+      'SELECT avaliacao_realizada FROM avaliacoes_realizadas WHERE cpf = ? AND instituicaoNome = ? AND nome = ?',
+      [cpf, instituicaoNome,nome]
     );
 
     if (rows.length > 0) {
       // Se a avaliação foi realizada, atualize a data_avaliacao
       if (rows[0].avaliacao_realizada === 1) {
         await pool.execute(
-          'UPDATE avaliacoes_realizadas SET data_avaliacao = NOW() WHERE cpf = ? AND instituicaoNome = ?',
-          [cpf, instituicaoNome]
+          'UPDATE avaliacoes_realizadas SET data_avaliacao = NOW() WHERE cpf = ? AND instituicaoNome = ? AND nome = ?',
+          [cpf, instituicaoNome, nome]
         );
       }
       res.status(200).json({ avaliacaoRealizada: rows[0].avaliacao_realizada });
