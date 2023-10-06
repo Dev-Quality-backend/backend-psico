@@ -47,7 +47,8 @@ app.get('/checkAvaliacao', async (req, res) => {
       }
       res.status(200).json({ avaliacaoRealizada: rows[0].avaliacao_realizada });
     } else {
-      res.status(404).send('Not Found');
+      console.log("Avaliação ainda não realizada.");  // Log para debug
+      res.status(200).json({ avaliacaoRealizada: false });  // Indica que a avaliação ainda não foi realizada
     }
   } catch (error) {
     console.error('Database query failed:', error);  // Log para debug
