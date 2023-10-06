@@ -605,7 +605,7 @@ app.post('/webhook/zoho', async (req, res) => {
     }
     
     // Agora, atualizar a tabela avaliacoes_realizadas
-    const [rows] = await pool.execute('INSERT INTO avaliacoes_realizadas (cpf, instituicaoNome, nome, avaliacao_realizada) VALUES (?, ?, ?, 1)', [cpf, instituicaoNome, nome]);
+    const [rows] = await pool.execute('INSERT INTO avaliacoes_realizadas (cpf, instituicaoNome, NomeCompleto, avaliacao_realizada) VALUES (?, ?, ?, 1)', [cpf, instituicaoNome, NomeCompleto]);
 
 
     if (rows.affectedRows > 0) {
