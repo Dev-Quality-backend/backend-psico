@@ -579,7 +579,6 @@ app.post('/salvar-instituicao', async (req, res) => {
   }
 });
 
-
 app.post('/webhook/zoho', async (req, res) => {
   const payload = req.body;
   console.log("Received payload:", payload);
@@ -607,8 +606,9 @@ app.post('/webhook/zoho', async (req, res) => {
     // Agora, atualizar a tabela avaliacoes_realizadas
     const [rows] = await pool.execute('INSERT INTO avaliacoes_realizadas (cpf, instituicaoNome, NomeCompleto, avaliacao_realizada) VALUES (?, ?, ?, 1)', [cpf, instituicaoNome, NomeCompleto]);
 
-
+    // Se a inserção foi bem-sucedida, atualize a coluna data_avaliacao
     if (rows.affectedRows > 0) {
+      await pool.execute('UPDATE avaliacoes_realizadas SET data_avaliacao = NOW() WHERE cpf = ? AND instituicaoNome = ?', [cpf, instituicaoNome]);
       res.status(200).send('Webhook received and database updated');
     } else {
       res.status(500).send('Database update failed');
@@ -618,7 +618,6 @@ app.post('/webhook/zoho', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
 
 
 app.post('/register_usuario', async (req, res) => {
