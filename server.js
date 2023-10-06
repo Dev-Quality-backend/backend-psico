@@ -509,7 +509,7 @@ app.get('/usuarios_instituicao', async (req, res) => {
 
   try {
     // Execute a query para buscar usuários da tabela Usuarios que correspondem ao ID da instituição
-    const [usuarios] = await pool.query('SELECT nome, identificador, senha, acesso FROM Usuarios WHERE instituicaoId = ?', [instituicaoId]);
+    const [usuarios] = await pool.query('SELECT NomeCompleto, identificador, senha, acesso FROM Usuarios WHERE instituicaoId = ?', [instituicaoId]);
     
     // Enviar os usuários como resposta JSON
     res.status(200).json(usuarios);
@@ -687,7 +687,7 @@ app.post("/api/user/login", async (req, res) => {
         success: true,
         message: 'Login bem-sucedido!',
         token: token,
-        username: user.Nome,  // Supondo que o nome do usuário está na coluna 'Nome'
+        NomeCompleto: user.Nome,  // Supondo que o nome do usuário está na coluna 'Nome'
         institution: user.instituicaoNome,
         role: 'Visualizador',
         birthDate: user.Data_de_Nascimento,
