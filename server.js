@@ -942,7 +942,7 @@ app.post('/api/RegisterUserActivity', async (req, res) => {
 app.put('/cadastro_clientes/:id', async (req, res) => {
   const id = req.params.id;
   const {
-      Nome, Sobrenome, Email, Data_de_Nascimento, Genero, Telefone, Telefone2, CPF, CNPJ,
+      NomeCompleto, Email, Data_de_Nascimento, Genero, Telefone, Telefone2, CPF, CNPJ,
       Matricula, Observacoes, Endereco, Numero, Complemento, Bairro, Cidade, Estado,
       Pais, CEP, Unidade, Setor, Cargo, Instituicao, Acesso, senha
   } = req.body;
@@ -952,8 +952,7 @@ app.put('/cadastro_clientes/:id', async (req, res) => {
 
       const query = `
           UPDATE cadastro_clientes SET
-              Nome = ?,
-              Sobrenome = ?,
+              NomeCompleto = ?,
               Email = ?,
               Data_de_Nascimento = ?,
               Genero = ?,
@@ -982,7 +981,7 @@ app.put('/cadastro_clientes/:id', async (req, res) => {
       `;
 
       await connection.query(query, [
-          Nome, Sobrenome, Email, Data_de_Nascimento, Genero, Telefone, Telefone2, CPF, CNPJ,
+          NomeCompleto, Email, Data_de_Nascimento, Genero, Telefone, Telefone2, CPF, CNPJ,
           Matricula, Observacoes, Endereco, Numero, Complemento, Bairro, Cidade, Estado,
           Pais, CEP, Unidade, Setor, Cargo, Instituicao, Acesso, senha,
           id
