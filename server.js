@@ -592,14 +592,14 @@ app.post('/webhook/zoho', async (req, res) => {
 
   try {
     // Primeiro, buscar o nome e instituicaoNome com base no CPF na tabela cadastro_clientes
-    const [clientes] = await pool.execute('SELECT nome, instituicaoNome FROM cadastro_clientes WHERE cpf = ?', [cpf]);
+    const [clientes] = await pool.execute('SELECT NomeCompleto, instituicaoNome FROM cadastro_clientes WHERE cpf = ?', [cpf]);
     
     if (clientes.length === 0) {
       return res.status(404).send('Cliente não encontrado');
     }
 
-    const { nome, instituicaoNome } = clientes[0];
-    if (!nome || !instituicaoNome) {
+    const { NomeCompleto, instituicaoNome } = clientes[0];
+    if (!NomeCompleto || !instituicaoNome) {
       console.error('Nome ou instituicaoNome estão undefined');
       return res.status(400).send('Bad Request: Nome ou Instituição estão undefined');
     }
