@@ -695,7 +695,8 @@ app.post("/api/user/login", async (req, res) => {
         institution: user.instituicaoNome,
         role: 'Visualizador',
         birthDate: user.Data_de_Nascimento,
-        cpf: user.CPF
+        cpf: user.CPF,
+        gender: user.Genero
       });
     } else {
       res.status(401).json({ success: false, message: 'Credenciais inválidas!' });
